@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:expedition_travel_challenge/widgets/circle_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class VulturePage extends StatelessWidget {
   VulturePage({
@@ -44,7 +45,7 @@ class _TravelDetailText extends AnimatedWidget {
     }
     return Positioned(
       bottom: 200.0,
-      left: 20.0,
+      left: max(0, 6 * opacitiy - 5) * 20.0,
       child: Opacity(
         opacity: max(0, 6 * opacitiy - 5),
         child: Text(
@@ -74,13 +75,20 @@ class _OnMapButton extends AnimatedWidget {
     if (controller.position.hasContentDimensions) {
       opacitiy = controller.page!;
     }
-    return Positioned(
-      bottom: 0.0,
-      left: 20.0,
-      child: Opacity(
-          opacity: max(0, 6 * opacitiy - 5),
+    return Consumer<AnimationController>(
+        builder: (context, animation, child) {
+          return Positioned(
+            bottom: 0.0,
+            left: 20.0,
+            child: child!,
+          );
+        },
+        child: Opacity(
+          opacity: max(0, (6 * opacitiy - 5)),
           child: TextButton(
-            onPressed: () => print('on map'),
+            onPressed: () =>
+                Provider.of<AnimationController>(context, listen: false)
+                    .forward(),
             child: Text(
               'ON MAP',
               style: TextStyle(
@@ -88,8 +96,8 @@ class _OnMapButton extends AnimatedWidget {
                 fontSize: 13.0,
               ),
             ),
-          )),
-    );
+          ),
+        ));
   }
 }
 
@@ -115,7 +123,7 @@ class _KmText extends AnimatedWidget {
           '72 km.',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16.0,
+            fontSize: max(0, 6 * opacitiy - 5) * 16.0,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -140,7 +148,7 @@ class _StartCampDetail extends AnimatedWidget {
     }
     return Positioned(
       bottom: 100.0,
-      left: 40.0,
+      left: max(0, 6 * opacitiy - 5) * 40.0,
       child: Opacity(
         opacity: max(0, 6 * opacitiy - 5),
         child: Column(
@@ -184,7 +192,7 @@ class _BaseCamp extends AnimatedWidget {
     }
     return Positioned(
       bottom: 100.0,
-      right: 40.0,
+      right: max(0, 6 * opacitiy - 5) * 40.0,
       child: Opacity(
         opacity: max(0, 6 * opacitiy - 5),
         child: Column(

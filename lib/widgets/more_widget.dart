@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MoreWidget extends StatefulWidget {
   @override
@@ -8,9 +9,14 @@ class MoreWidget extends StatefulWidget {
 class _MoreWidgetState extends State<MoreWidget> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 200.0,
-      right: 20.0,
+    return Consumer<AnimationController>(
+      builder: (context, animation, child) {
+        return Positioned(
+          top: (1 - animation.value) * 650.0,
+          right: 20.0,
+          child: child!,
+        );
+      },
       child: GestureDetector(
         child: Icon(
           Icons.keyboard_arrow_up,
