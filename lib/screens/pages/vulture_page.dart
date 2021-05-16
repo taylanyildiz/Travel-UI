@@ -19,11 +19,10 @@ class VulturePage extends StatelessWidget {
         CircleAnimation(controller: controller),
         _TravelDetailText(controller: controller),
         _StartCampDetail(controller: controller),
-        _CenterCircle(controller: controller),
         _OnMapButton(controller: controller),
         _BaseCamp(controller: controller),
         _KmText(controller: controller),
-        _BiggerCircle(controller: controller),
+        _CenterCircle(controller: controller),
       ],
     );
   }
@@ -222,71 +221,56 @@ class _CenterCircle extends AnimatedWidget {
   final PageController controller;
   @override
   Widget build(BuildContext context) {
-    double opacitiy = 0.0;
+    double opacity = 0.0;
     if (controller.position.hasContentDimensions) {
-      opacitiy = controller.page!;
+      opacity = max(0, 6 * controller.page! - 5);
     }
     return Positioned(
       bottom: 145.0,
-      child: Opacity(
-        opacity: max(0, 6 * opacitiy - 5),
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(3.0),
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                shape: BoxShape.circle,
+      child: Center(
+        child: Opacity(
+          opacity: opacity,
+          child: Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: opacity * 40.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white),
+                ),
+                height: 8.0,
+                width: 8.0,
               ),
-            ),
-            SizedBox(width: 5.0),
-            Container(
-              padding: EdgeInsets.all(3.0),
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                shape: BoxShape.circle,
+              Container(
+                margin: EdgeInsets.only(left: opacity * 15.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey,
+                ),
+                height: 8.0,
+                width: 6.0,
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(left: opacity * 25.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey,
+                ),
+                height: 8.0,
+                width: 6.0,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 0.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                height: 8.0,
+                width: 8.0,
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class _BiggerCircle extends AnimatedWidget {
-  _BiggerCircle({
-    Key? key,
-    required this.controller,
-  }) : super(key: key, listenable: controller);
-
-  final PageController controller;
-  @override
-  Widget build(BuildContext context) {
-    double opacitiy = 0.0;
-    if (controller.position.hasContentDimensions) {
-      opacitiy = controller.page!;
-    }
-    return Positioned(
-      bottom: 142.5,
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white),
-            ),
-          ),
-          SizedBox(width: 40.0),
-          Container(
-            padding: EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ],
       ),
     );
   }

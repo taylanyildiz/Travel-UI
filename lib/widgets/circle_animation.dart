@@ -17,15 +17,17 @@ class CircleAnimation extends AnimatedWidget {
       value = controller.page!;
     }
     return Positioned(
-      top: 150.0,
-      child: Transform.scale(
-        scale: max(0.0, 5 * value - 4),
-        child: Container(
-          height: 200.0,
-          width: 200.0,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            shape: BoxShape.circle,
+      top: 200.0,
+      child: Center(
+        child: Transform.scale(
+          scale: max(0.0, 5 * value - 4),
+          child: Container(
+            height: 200.0,
+            width: 200.0,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              shape: BoxShape.circle,
+            ),
           ),
         ),
       ),
