@@ -15,6 +15,7 @@ class _MoreWidgetState extends State<MoreWidget> {
     return Consumer<AnimationController>(
       builder: (context, animation, child) {
         return Positioned(
+<<<<<<< Updated upstream
           top: 100 + (1 - animation.value) * size.height / 2,
           right: 10.0,
           child: Transform.rotate(
@@ -32,6 +33,23 @@ class _MoreWidgetState extends State<MoreWidget> {
                 color: Colors.white,
                 size: 40.0,
               ),
+=======
+          top: (1 - animation.value) * 650.0,
+          right: 20.0,
+          child: Transform.rotate(
+            angle: animation
+                .drive(
+                  Tween(
+                    begin: 0.0,
+                    end: pi,
+                  ),
+                )
+                .value,
+            child: Icon(
+              Icons.keyboard_arrow_up,
+              color: Colors.white,
+              size: 30.0,
+>>>>>>> Stashed changes
             ),
           ),
         );
