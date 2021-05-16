@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _pageController = PageController();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 1),
     );
   }
 
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _pageController.dispose();
   }
 
-  double get maxHeight => mainSquareSize(context) + 32 + 24;
+  double get maxHeight => mainSquareSize(context);
 
   void _handleDragUpdate(DragUpdateDetails details) {
     _animationController.value -= details.primaryDelta! / maxHeight;

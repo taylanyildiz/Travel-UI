@@ -19,10 +19,19 @@ class _MoreWidgetState extends State<MoreWidget> {
           right: 10.0,
           child: Transform.rotate(
             angle: animation.drive(Tween(begin: 0.0, end: pi)).value,
-            child: Icon(
-              Icons.keyboard_arrow_up,
-              color: Colors.white,
-              size: 40.0,
+            child: IconButton(
+              onPressed: () {
+                if (animation.status == AnimationStatus.completed) {
+                  animation.reverse();
+                } else {
+                  animation.forward();
+                }
+              },
+              icon: Icon(
+                Icons.keyboard_arrow_up,
+                color: Colors.white,
+                size: 40.0,
+              ),
             ),
           ),
         );
