@@ -153,7 +153,7 @@ class _StartCampDetail extends AnimatedWidget {
       opacitiy = controller.page!;
     }
     return Positioned(
-      top: size.height / 1.35,
+      top: 150 + size.height / 1.85,
       left: max(0, 6 * opacitiy - 5) * 40.0,
       child: Opacity(
         opacity: max(0, 6 * opacitiy - 5),
