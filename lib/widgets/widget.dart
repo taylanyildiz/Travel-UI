@@ -5,3 +5,4 @@ export 'vulture_image.dart';
 export 'page_indicator.dart';
 export 'more_widget.dart';
 export 'circle_animation.dart';
+export 'vertical_dot.dart';

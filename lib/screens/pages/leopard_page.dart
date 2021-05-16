@@ -28,8 +28,9 @@ class _The72Text extends AnimatedWidget {
   final PageController controller;
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Positioned(
-      top: 150.0,
+      top: size.height / 8,
       child: Transform.translate(
         offset: Offset(-60 - 0.5 * (controller.offset), 0),
         child: RotatedBox(
@@ -70,7 +71,6 @@ class _LeopardDescription extends AnimatedWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0),
           child: Container(
-            height: size.height / 6,
             width: size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class _LeopardDescription extends AnimatedWidget {
                   'Travel description',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 25.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

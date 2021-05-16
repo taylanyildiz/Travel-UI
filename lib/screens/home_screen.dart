@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,9 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+double mainSquareSize(BuildContext context) =>
+    MediaQuery.of(context).size.height / 2;
+
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late PageController _pageController;
 
@@ -27,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _pageController = PageController();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 4),
     );
   }
 
@@ -37,23 +42,49 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _pageController.dispose();
   }
 
-  _handleDragUpdate(detail) {}
+  double get maxHeight => mainSquareSize(context) + 32 + 24;
 
-  _handleDragEnd(detail) {}
+  void _handleDragUpdate(DragUpdateDetails details) {
+    _animationController.value -= details.primaryDelta! / maxHeight;
+  }
+
+  void _handleDragEnd(DragEndDetails details) {
+    if (_animationController.isAnimating ||
+        _animationController.status == AnimationStatus.completed) return;
+
+    final double flingVelocity =
+        details.velocity.pixelsPerSecond.dy / maxHeight;
+    if (flingVelocity < 0.0)
+      _animationController.fling(velocity: max(2.0, -flingVelocity));
+    else if (flingVelocity > 0.0)
+      _animationController.fling(velocity: min(-2.0, -flingVelocity));
+    else
+      _animationController.fling(
+          velocity: _animationController.value < 0.5 ? -2.0 : 2.0);
+  }
+
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    bool isPage = false;
+    if (currentPage == 1) {
+      isPage = true;
+    } else {
+      isPage = false;
+    }
     return ListenableProvider.value(
       value: _animationController,
       child: Scaffold(
         body: SafeArea(
           child: GestureDetector(
-            onVerticalDragUpdate: _handleDragUpdate,
-            onVerticalDragEnd: _handleDragEnd,
+            onVerticalDragUpdate: isPage ? _handleDragUpdate : null,
+            onVerticalDragEnd: isPage ? _handleDragEnd : null,
             child: Stack(
               alignment: Alignment.centerLeft,
               children: [
                 PageView(
+                  onPageChanged: (page) => setState(() => currentPage = page),
                   controller: _pageController,
                   physics: ClampingScrollPhysics(),
                   children: [
@@ -67,11 +98,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   indicatorColor: Colors.grey,
                   radius: 4.0,
                 ),
-                CustomAppBar(),
-                ShareButton(),
                 LeopardImage(controller: _pageController),
                 VultureImage(controller: _pageController),
+                CustomAppBar(),
+                ShareButton(),
                 MoreWidget(),
+                VerticalDot(),
               ],
             ),
           ),

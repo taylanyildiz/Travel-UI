@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class VultureImage extends AnimatedWidget {
   VultureImage({
@@ -14,17 +15,27 @@ class VultureImage extends AnimatedWidget {
     if (controller.position.hasContentDimensions) {
       offset = controller.offset;
     }
-    return Positioned(
-      left: 1.2 * MediaQuery.of(context).size.width - offset * .85,
-      child: IgnorePointer(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 60.0),
-          child: Image.asset(
-            'assets/images/vulture.png',
-            height: MediaQuery.of(context).size.height / 3,
+    return Consumer<AnimationController>(
+      builder: (context, animation, child) {
+        return Positioned(
+          left: (1.2 * MediaQuery.of(context).size.width - offset * .85) *
+              (1 - animation.value * .01),
+          child: IgnorePointer(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 60.0),
+              child: Opacity(
+                opacity: 1 - 0.6 * animation.value,
+                child: Image.asset(
+                  'assets/images/vulture.png',
+                  height: (1 - animation.value * .08) *
+                      MediaQuery.of(context).size.height /
+                      3,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

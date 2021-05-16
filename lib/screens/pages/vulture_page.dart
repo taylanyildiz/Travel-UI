@@ -39,24 +39,29 @@ class _TravelDetailText extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     double opacitiy = 0.0;
     if (controller.position.hasContentDimensions) {
       opacitiy = controller.page!;
     }
-    return Positioned(
-      bottom: 200.0,
-      left: max(0, 6 * opacitiy - 5) * 20.0,
-      child: Opacity(
-        opacity: max(0, 6 * opacitiy - 5),
-        child: Text(
-          'Travel Detail',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
+    return Consumer<AnimationController>(
+      builder: (context, animation, child) {
+        return Positioned(
+          top: 100 + (1 - animation.value) * size.height / 2,
+          left: max(0, 6 * opacitiy - 5) * 20.0,
+          child: Opacity(
+            opacity: max(0, 6 * opacitiy - 5),
+            child: Text(
+              'Travel Detail',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -142,12 +147,13 @@ class _StartCampDetail extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     double opacitiy = 0.0;
     if (controller.position.hasContentDimensions) {
       opacitiy = controller.page!;
     }
     return Positioned(
-      bottom: 100.0,
+      top: size.height / 1.35,
       left: max(0, 6 * opacitiy - 5) * 40.0,
       child: Opacity(
         opacity: max(0, 6 * opacitiy - 5),
@@ -186,36 +192,41 @@ class _BaseCamp extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     double opacitiy = 0.0;
     if (controller.position.hasContentDimensions) {
       opacitiy = controller.page!;
     }
-    return Positioned(
-      bottom: 100.0,
-      right: max(0, 6 * opacitiy - 5) * 40.0,
-      child: Opacity(
-        opacity: max(0, 6 * opacitiy - 5),
-        child: Column(
-          children: [
-            Text(
-              'Base camp',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
+    return Consumer<AnimationController>(
+      builder: (context, animation, child) {
+        return Positioned(
+          top: 150 + (1 - animation.value) * size.height / 1.85,
+          right: max(0, 6 * opacitiy - 5) * 40.0,
+          child: Opacity(
+            opacity: max(0, 6 * opacitiy - 5),
+            child: Column(
+              children: [
+                Text(
+                  'Base camp',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  '07:30 pm',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 20.0),
-            Text(
-              '07:30 pm',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 18.0,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -229,57 +240,75 @@ class _CenterCircle extends AnimatedWidget {
   final PageController controller;
   @override
   Widget build(BuildContext context) {
-    double opacity = 0.0;
-    if (controller.position.hasContentDimensions) {
-      opacity = max(0, 6 * controller.page! - 5);
-    }
-    return Positioned(
-      bottom: 145.0,
-      child: Center(
-        child: Opacity(
-          opacity: opacity,
-          child: Stack(
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: opacity * 40.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white),
-                ),
-                height: 8.0,
-                width: 8.0,
+    final size = MediaQuery.of(context).size;
+    double spacer = 0.0;
+
+    return Consumer<AnimationController>(
+      builder: (context, animation, child) {
+        if (controller.position.hasContentDimensions) {
+          spacer = max(0, (1 - animation.value) * 2 * controller.page! - 1);
+        }
+        return Positioned(
+          bottom: size.height / 4.9,
+          child: Center(
+            child: Opacity(
+              opacity: max(0, 6 * controller.page! - 5),
+              child: Stack(
+                children: [
+                  Opacity(
+                    opacity: max(0, 1 - animation.value),
+                    child: Container(
+                      margin: EdgeInsets.only(left: spacer * 40.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      height: 8.0,
+                      width: 8.0,
+                    ),
+                  ),
+                  Opacity(
+                    opacity: max(0, 1 - animation.value),
+                    child: Container(
+                      margin: EdgeInsets.only(left: spacer * 15.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey,
+                      ),
+                      height: 8.0,
+                      width: 6.0,
+                    ),
+                  ),
+                  Opacity(
+                    opacity: max(0, 1 - animation.value),
+                    child: Container(
+                      margin: EdgeInsets.only(left: spacer * 25.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey,
+                      ),
+                      height: 8.0,
+                      width: 6.0,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 0.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 1.5,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    height: 8.0,
+                    width: 8.0,
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(left: opacity * 15.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
-                ),
-                height: 8.0,
-                width: 6.0,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: opacity * 25.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
-                ),
-                height: 8.0,
-                width: 6.0,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 0.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                height: 8.0,
-                width: 8.0,
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
