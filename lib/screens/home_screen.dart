@@ -13,6 +13,8 @@ class MapAnimationNotifier with ChangeNotifier {
     _mapAnimationController!.addListener(_onAnimationControllerChange);
   }
 
+  Animation<double> get animation => _mapAnimationController!.view;
+
   double get value => _mapAnimationController!.value;
 
   void forward() => _mapAnimationController!.forward();
@@ -141,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       VerticalDot(),
                       VerticalImages(),
                       CurvedDot(),
+                      CurvedImages(),
                     ],
                   ),
                 ),

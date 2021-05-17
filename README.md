@@ -8,7 +8,63 @@
 ![design](https://user-images.githubusercontent.com/16286046/64514994-09339100-d2ec-11e9-9fde-2b48aa5c222b.gif)
 
 
+|              App Display             | 
+| :----------------------------------: | 
+| <a  target="_blank"><img src="travel.gif" width="200"></a> |  
+
+
+### Map Line Curved
+##
+#
+ - [map curve line paint](https://github.com/taylanyildiz/Travel-UI/blob/master/lib/widgets/map_curve_line.dart)
+```dart
+
+final Animation<double> animation;
+
+ Path path = Path();
+    path.moveTo(size.width / 2 + size.width * .05 * animation.value, 5);
+    path.cubicTo(
+      size.width / 2 + size.width * .2 * animation.value,
+      size.height / 6,
+      size.width / 2,
+      size.height / 6,
+      size.width / 2 + size.width * .16 * animation.value,
+      size.height / 3.3,
+    );
+    path.cubicTo(
+      size.width / 2 + size.width * .3 * animation.value,
+      size.height / 2,
+      size.width / 2 + size.width * .3 * animation.value,
+      size.height / 2,
+      size.width / 2 + size.width * .12 * animation.value,
+      size.height / 1.3,
+    );
+    path.cubicTo(
+      size.width / 2,
+      size.height / 1.3,
+      size.width / 2,
+      size.height / 1.3,
+      size.width / 2 - size.width * .01 * animation.value,
+      size.height / 1.2,
+    );
+    path.cubicTo(
+      size.width / 2 - size.width * .2 * animation.value,
+      size.height,
+      size.width / 2,
+      size.height,
+      size.width / 2 - size.width * .18 * animation.value,
+      size.height + 4,
+    );
+
+    if (animation.value > 0) {
+      canvas.drawPath(path, mapLinePaint);
+    }
+```
 ### GesutureDetector Vertical Handler
+
+##
+#
+ - [gesture](https://github.com/taylanyildiz/Travel-UI/blob/master/lib/widgets/home_screen.dart)
 ```dart
 void _handleDragUpdate(DragUpdateDetails details) {
     _animationController.value -= details.primaryDelta! / maxHeight;
@@ -31,7 +87,8 @@ void _handleDragUpdate(DragUpdateDetails details) {
 ```
 # Import
 ```
-We can listen to the page change from all classes by using pageController in Pageview. The class to listen to should benefit from the listenable feature, that is, inherit from the AnimatedWidget class.
+We can listen to the page change from all classes by using pageController in Pageview.
+The class to listen to should benefit from the listenable feature,that is,inherit from the AnimatedWidget class.
 ```
 ### Example
 ```dart

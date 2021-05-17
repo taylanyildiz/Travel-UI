@@ -10,3 +10,5 @@ export 'map_image.dart';
 export 'vertical_images.dart';
 export 'map_hider.dart';
 export 'curved_dot.dart';
+export 'curved_images.dart';
+export 'map_curve_line.dart';
