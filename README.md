@@ -30,7 +30,7 @@ void _handleDragUpdate(DragUpdateDetails details) {
   }
 ```
 # Import
-```t
+```
 We can listen to the page change from all classes by using pageController in Pageview. The class to listen to should benefit from the listenable feature, that is, inherit from the AnimatedWidget class.
 ```
 ### Example
