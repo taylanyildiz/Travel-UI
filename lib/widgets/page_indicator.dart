@@ -1,3 +1,4 @@
+import 'package:expedition_travel_challenge/widgets/map_hider.dart';
 import 'package:flutter/material.dart';
 
 class PageIndicator extends StatelessWidget {
@@ -30,17 +31,19 @@ class PageIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 30.0,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        child: CustomPaint(
-          painter: _PageIndicatorPaint(
-            listen: listen,
-            pageCount: pageCount,
-            indicatorColor: indicatorColor,
-            defaultIndicatorColor: defaultIndicatorColor,
-            thickness: thickness ?? 1.0,
-            radius: radius ?? 6.0,
-            space: space ?? 3.0,
+      child: MapHider(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: CustomPaint(
+            painter: _PageIndicatorPaint(
+              listen: listen,
+              pageCount: pageCount,
+              indicatorColor: indicatorColor,
+              defaultIndicatorColor: defaultIndicatorColor,
+              thickness: thickness ?? 1.0,
+              radius: radius ?? 6.0,
+              space: space ?? 3.0,
+            ),
           ),
         ),
       ),

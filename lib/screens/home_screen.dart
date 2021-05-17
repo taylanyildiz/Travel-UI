@@ -6,6 +6,30 @@ import 'package:provider/provider.dart';
 import '../widgets/widget.dart';
 import 'screen.dart';
 
+class MapAnimationNotifier with ChangeNotifier {
+  AnimationController? _mapAnimationController;
+
+  MapAnimationNotifier(this._mapAnimationController) {
+    _mapAnimationController!.addListener(_onAnimationControllerChange);
+  }
+
+  double get value => _mapAnimationController!.value;
+
+  void forward() => _mapAnimationController!.forward();
+
+  void reverse() => _mapAnimationController!.reverse();
+
+  void _onAnimationControllerChange() {
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _mapAnimationController!.removeListener(_onAnimationControllerChange);
+    super.dispose();
+  }
+}
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({
     Key? key,
@@ -25,12 +49,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late PageController _pageController;
 
   late AnimationController _animationController;
+  late AnimationController _mapAnimationController;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
     _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    _mapAnimationController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
     );
@@ -75,37 +104,48 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
     return ListenableProvider.value(
       value: _animationController,
-      child: Scaffold(
-        body: SafeArea(
-          child: GestureDetector(
-            onVerticalDragUpdate: isPage ? _handleDragUpdate : null,
-            onVerticalDragEnd: isPage ? _handleDragEnd : null,
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                PageView(
-                  onPageChanged: (page) => setState(() => currentPage = page),
-                  controller: _pageController,
-                  physics: ClampingScrollPhysics(),
-                  children: [
-                    LeopardPage(controller: _pageController),
-                    VulturePage(controller: _pageController),
-                  ],
+      child: ChangeNotifierProvider(
+        create: (_) => MapAnimationNotifier(_mapAnimationController),
+        child: Scaffold(
+          body: Stack(
+            children: [
+              MapImage(),
+              SafeArea(
+                child: GestureDetector(
+                  onVerticalDragUpdate: isPage ? _handleDragUpdate : null,
+                  onVerticalDragEnd: isPage ? _handleDragEnd : null,
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      PageView(
+                        onPageChanged: (page) =>
+                            setState(() => currentPage = page),
+                        controller: _pageController,
+                        physics: ClampingScrollPhysics(),
+                        children: [
+                          LeopardPage(controller: _pageController),
+                          VulturePage(controller: _pageController),
+                        ],
+                      ),
+                      PageIndicator(
+                        listen: _pageController,
+                        pageCount: 2,
+                        indicatorColor: Colors.grey,
+                        radius: 4.0,
+                      ),
+                      LeopardImage(controller: _pageController),
+                      VultureImage(controller: _pageController),
+                      CustomAppBar(),
+                      ShareButton(),
+                      MoreWidget(),
+                      VerticalDot(),
+                      VerticalImages(),
+                      CurvedDot(),
+                    ],
+                  ),
                 ),
-                PageIndicator(
-                  listen: _pageController,
-                  pageCount: 2,
-                  indicatorColor: Colors.grey,
-                  radius: 4.0,
-                ),
-                LeopardImage(controller: _pageController),
-                VultureImage(controller: _pageController),
-                CustomAppBar(),
-                ShareButton(),
-                MoreWidget(),
-                VerticalDot(),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

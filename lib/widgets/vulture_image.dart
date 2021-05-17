@@ -1,3 +1,4 @@
+import 'package:expedition_travel_challenge/widgets/map_hider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,16 +21,18 @@ class VultureImage extends AnimatedWidget {
         return Positioned(
           left: (1.2 * MediaQuery.of(context).size.width - offset * .85) *
               (1 - animation.value * .01),
-          child: IgnorePointer(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 60.0),
-              child: Opacity(
-                opacity: 1 - 0.6 * animation.value,
-                child: Image.asset(
-                  'assets/images/vulture.png',
-                  height: (1 - animation.value * .08) *
-                      MediaQuery.of(context).size.height /
-                      3,
+          child: MapHider(
+            child: IgnorePointer(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 60.0),
+                child: Opacity(
+                  opacity: 1 - 0.6 * animation.value,
+                  child: Image.asset(
+                    'assets/images/vulture.png',
+                    height: (1 - animation.value * .08) *
+                        MediaQuery.of(context).size.height /
+                        3,
+                  ),
                 ),
               ),
             ),

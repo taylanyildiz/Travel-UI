@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:expedition_travel_challenge/screens/home_screen.dart';
 import 'package:expedition_travel_challenge/widgets/circle_animation.dart';
+import 'package:expedition_travel_challenge/widgets/map_hider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,14 +51,16 @@ class _TravelDetailText extends AnimatedWidget {
         return Positioned(
           top: 100 + (1 - animation.value) * size.height / 2,
           left: max(0, 6 * opacitiy - 5) * 20.0,
-          child: Opacity(
-            opacity: max(0, 6 * opacitiy - 5),
-            child: Text(
-              'Travel Detail',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
+          child: MapHider(
+            child: Opacity(
+              opacity: max(0, 6 * opacitiy - 5),
+              child: Text(
+                'Travel Detail',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -91,9 +95,11 @@ class _OnMapButton extends AnimatedWidget {
         child: Opacity(
           opacity: max(0, (6 * opacitiy - 5)),
           child: TextButton(
-            onPressed: () =>
-                Provider.of<AnimationController>(context, listen: false)
-                    .forward(),
+            onPressed: () {
+              final notifier =
+                  Provider.of<MapAnimationNotifier>(context, listen: false);
+              notifier.value == 0 ? notifier.forward() : notifier.reverse();
+            },
             child: Text(
               'ON MAP',
               style: TextStyle(
@@ -122,14 +128,16 @@ class _KmText extends AnimatedWidget {
     }
     return Positioned(
       bottom: 100.0,
-      child: Opacity(
-        opacity: max(0, 6 * opacitiy - 5),
-        child: Text(
-          '72 km.',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: max(0, 6 * opacitiy - 5) * 16.0,
-            fontWeight: FontWeight.bold,
+      child: MapHider(
+        child: Opacity(
+          opacity: max(0, 6 * opacitiy - 5),
+          child: Text(
+            '72 km.',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: max(0, 6 * opacitiy - 5) * 16.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -155,27 +163,29 @@ class _StartCampDetail extends AnimatedWidget {
     return Positioned(
       top: 150 + size.height / 1.85,
       left: max(0, 6 * opacitiy - 5) * 40.0,
-      child: Opacity(
-        opacity: max(0, 6 * opacitiy - 5),
-        child: Column(
-          children: [
-            Text(
-              'Start camp',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
+      child: MapHider(
+        child: Opacity(
+          opacity: max(0, 6 * opacitiy - 5),
+          child: Column(
+            children: [
+              Text(
+                'Start camp',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              '02:40 pm',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 18.0,
+              SizedBox(height: 20.0),
+              Text(
+                '02:40 pm',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18.0,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -202,27 +212,29 @@ class _BaseCamp extends AnimatedWidget {
         return Positioned(
           top: 150 + (1 - animation.value) * size.height / 1.85,
           right: max(0, 6 * opacitiy - 5) * 40.0,
-          child: Opacity(
-            opacity: max(0, 6 * opacitiy - 5),
-            child: Column(
-              children: [
-                Text(
-                  'Base camp',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
+          child: MapHider(
+            child: Opacity(
+              opacity: max(0, 6 * opacitiy - 5),
+              child: Column(
+                children: [
+                  Text(
+                    'Base camp',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.0),
-                Text(
-                  '07:30 pm',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 18.0,
+                  SizedBox(height: 20.0),
+                  Text(
+                    '07:30 pm',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18.0,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -243,13 +255,15 @@ class _CenterCircle extends AnimatedWidget {
     final size = MediaQuery.of(context).size;
     double spacer = 0.0;
 
-    return Consumer<AnimationController>(
-      builder: (context, animation, child) {
+    return Consumer2<AnimationController, MapAnimationNotifier>(
+      builder: (context, animation, notifier, child) {
         if (controller.position.hasContentDimensions) {
           spacer = max(0, (1 - animation.value) * 2 * controller.page! - 1);
         }
         return Positioned(
           bottom: size.height / 4.9,
+          left: notifier.value > 0 ? -150 * notifier.value : 0,
+          right: 0,
           child: Center(
             child: Opacity(
               opacity: max(0, 6 * controller.page! - 5),

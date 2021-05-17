@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expedition_travel_challenge/widgets/map_hider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,20 +18,22 @@ class _MoreWidgetState extends State<MoreWidget> {
         return Positioned(
           top: 100 + (1 - animation.value) * size.height / 2,
           right: 10.0,
-          child: Transform.rotate(
-            angle: animation.drive(Tween(begin: 0.0, end: pi)).value,
-            child: IconButton(
-              onPressed: () {
-                if (animation.status == AnimationStatus.completed) {
-                  animation.reverse();
-                } else {
-                  animation.forward();
-                }
-              },
-              icon: Icon(
-                Icons.keyboard_arrow_up,
-                color: Colors.white,
-                size: 40.0,
+          child: MapHider(
+            child: Transform.rotate(
+              angle: animation.drive(Tween(begin: 0.0, end: pi)).value,
+              child: IconButton(
+                onPressed: () {
+                  if (animation.status == AnimationStatus.completed) {
+                    animation.reverse();
+                  } else {
+                    animation.forward();
+                  }
+                },
+                icon: Icon(
+                  Icons.keyboard_arrow_up,
+                  color: Colors.white,
+                  size: 40.0,
+                ),
               ),
             ),
           ),

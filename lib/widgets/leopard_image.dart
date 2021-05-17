@@ -1,3 +1,4 @@
+import 'package:expedition_travel_challenge/widgets/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +20,12 @@ class LeopardImage extends AnimatedWidget {
         return Positioned(
           width: (1 - animation.value * .05) * size.width * 1.6,
           left: -offset * .85 * (1 - animation.value * .07),
-          child: IgnorePointer(
-            child: Opacity(
-              opacity: 1 - 0.6 * animation.value,
-              child: Image.asset('assets/images/leopard.png'),
+          child: MapHider(
+            child: IgnorePointer(
+              child: Opacity(
+                opacity: 1 - 0.6 * animation.value,
+                child: Image.asset('assets/images/leopard.png'),
+              ),
             ),
           ),
         );

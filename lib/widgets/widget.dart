@@ -6,3 +6,7 @@ export 'page_indicator.dart';
 export 'more_widget.dart';
 export 'circle_animation.dart';
 export 'vertical_dot.dart';
+export 'map_image.dart';
+export 'vertical_images.dart';
+export 'map_hider.dart';
+export 'curved_dot.dart';

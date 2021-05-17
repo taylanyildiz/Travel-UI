@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expedition_travel_challenge/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +19,15 @@ class CircleAnimation extends AnimatedWidget {
     if (controller.position.hasContentDimensions) {
       value = controller.page!;
     }
-    return Consumer<AnimationController>(
-      builder: (context, animation, child) {
+    return Consumer2<AnimationController, MapAnimationNotifier>(
+      builder: (context, animation, notifier, child) {
         return Positioned(
           top: size.height / 5,
           child: Center(
             child: Transform.scale(
-              scale: (1 - animation.value) * max(0.0, 5 * value - 4),
+              scale: (1 - notifier.value) *
+                  (1 - animation.value) *
+                  max(0.0, 5 * value - 4),
               child: Container(
                 height: 200.0,
                 width: 200.0,
