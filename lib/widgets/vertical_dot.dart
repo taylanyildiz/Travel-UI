@@ -12,7 +12,6 @@ class VerticalDot extends StatelessWidget {
         double bottom = size.height / 4.9 + 8;
         double top = size.height /
             (6 * (animation.value < 0.8 ? animation.value * .9 : .7));
-        print(animation.value);
         return Positioned(
           bottom: bottom,
           left: 0,
