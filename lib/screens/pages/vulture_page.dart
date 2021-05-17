@@ -262,7 +262,7 @@ class _CenterCircle extends AnimatedWidget {
         }
         return Positioned(
           bottom: size.height / 4.9,
-          left: notifier.value > 0 ? -150 * notifier.value : 0,
+          left: notifier.value > 0 ? -size.width / 2.6 * notifier.value : 0,
           right: 0,
           child: Center(
             child: Opacity(

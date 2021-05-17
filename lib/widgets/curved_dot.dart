@@ -42,7 +42,9 @@ class CurvedDot extends StatelessWidget {
                                       size.height * 0.02 * notifier.value
                                   : size.height / 3
                               : top,
-                          right: notifier.value > 0 ? -120 * notifier.value : 0,
+                          right: notifier.value > 0
+                              ? -size.width / 5.2 * notifier.value
+                              : 0,
                           left: 0,
                           child: Container(
                             decoration: BoxDecoration(
@@ -57,7 +59,7 @@ class CurvedDot extends StatelessWidget {
                           bottom: top <= size.height / 1.5
                               ? notifier.value > 0
                                   ? size.height / 6 -
-                                      size.height * 0.05 * notifier.value
+                                      size.height * 0.065 * notifier.value
                                   : size.height / 6
                               : top,
                           right: notifier.value > 0 ? -100 * notifier.value : 0,
