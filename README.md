@@ -152,6 +152,38 @@ The class to listen to should benefit from the listenable feature,that is,inheri
         }
     )
 ```
+```dart
+class MapAnimationNotifier with ChangeNotifier{
+
+ 
+
+ AnimationController? _animation;
+ 
+ MapAnimationNotifier(this._animation){
+  _animation!.addListener(_onChangeAnimation);
+ }
+ 
+ void _onChangeAnimation(){
+  notifyListeners();
+ }
+ 
+ Animation<double> get animation => _animation;
+ 
+ double get value =>_animation!.value;
+ 
+ void forward() => _animation!.forward();
+ 
+ void reverse() => _animation!.reverse();
+ 
+
+ @override
+ void dispose(){
+  super.dispose();
+  _animation!.removeListener(_onChangeAnimation);
+  _animation.dispose();
+ }
+}
+```
 
 ```yaml
  provider:
