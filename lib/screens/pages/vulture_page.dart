@@ -258,7 +258,7 @@ class _CenterCircle extends AnimatedWidget {
     return Consumer2<AnimationController, MapAnimationNotifier>(
       builder: (context, animation, notifier, child) {
         if (controller.position.hasContentDimensions) {
-          spacer = max(0, (1 - animation.value) * 2 * controller.page! - 1);
+          spacer = max(0, (1 - animation.value) * 5 * controller.page! - 4);
         }
         return Positioned(
           bottom: size.height / 4.9,
